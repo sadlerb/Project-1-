@@ -7,11 +7,59 @@ This file creates your application.
 
 from app import app
 from flask import render_template, request, redirect, url_for
+from app.form import PropertyForm
+from werkzeug.utils import secure_filename
+from flask.helpers import flash
+from app.models import Property
+from app import db
+import os
 
 
 ###
 # Routing for your application.
 ###
+@app.route('/property',methods=['POST','GET'])
+def property():
+    form = PropertyForm()
+    if request.method == 'GET':
+        return render_template('property.html',form=form)
+    elif request.method == "POST":
+        if form.validate_on_submit:
+            title = form.title.data
+            numBeds = form.bedrooms.data
+            location = form.location.data
+            price = form.price.data
+            desc = form.description.data
+            propertyType = form.houseType.data
+            
+            file = request.files['photo']
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+
+            newProperty = Property(title,numBeds,location,price,desc,filename,propertyType)
+
+            db.session.add(newProperty)
+            db.session.commit()
+
+
+
+            flash("Property Sucessfully added")
+            return redirect(url_for('properties'))
+        else:
+            flash("Data entered not valid")
+
+
+@app.route('/property/<propertyid>')
+def propertyid():
+    return render_template('property.html')
+
+@app.route('/properties')
+def properties():
+    get_uploaded_properties()
+    return render_template('properties.html')
+
+
 
 @app.route('/')
 def home():
@@ -61,6 +109,11 @@ def add_header(response):
 def page_not_found(error):
     """Custom 404 page."""
     return render_template('404.html'), 404
+    
+def get_uploaded_properties():
+    propertyList = Property.query.all()
+    for p in propertyList:
+        print(p.title)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+{% endblock %}
+
+{% block main %}
+<form action="{{ url_for('property') }}" method = 'POST' action="/process/file" enctype="multipart/form-data">
+
+  <div>{{ form.csrf_token }}</div>
+  <div>
+    {{ form.title.label}}
+    {{ form.title}}
+  </div>
+  <div>
+    {{ form.description.label}}
+    {{ form.description}}</div>
+  <div>
+    {{ form.bedrooms.label}}
+    {{ form.bedrooms}}</div>
+  <div>
+    {{ form.location.label}}
+    {{ form.location}}</div>
+  <div>
+    {{ form.price.label}}
+    {{ form.price}}</div>
+
+    {{ form.houseType.label}}
+    {{ form.houseType}}</div>
+  <div>
+    {{ form.photo.label}}
+    {{ form.photo}}</div>
+  <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/app.min.js') }}" charset="utf-8"></script>
+{% endblock %}
