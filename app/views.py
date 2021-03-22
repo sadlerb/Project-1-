@@ -9,7 +9,7 @@ from app import app
 from flask import render_template, request, redirect, url_for
 from app.form import PropertyForm
 from werkzeug.utils import secure_filename
-from flask.helpers import flash
+from flask.helpers import flash, send_from_directory
 from app.models import Property
 from app import db
 import os
@@ -37,7 +37,7 @@ def property():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
 
-            newProperty = Property(title,numBeds,location,price,desc,filename,propertyType)
+            newProperty = Property(title,numBeds,numBath,location,price,desc,filename,propertyType)
 
             db.session.add(newProperty)
             db.session.commit()
@@ -51,13 +51,15 @@ def property():
 
 
 @app.route('/property/<propertyid>')
-def propertyid():
-    return render_template('property.html')
+def propertyid(propertyid):
+    expandedProperty = Property.query.get(propertyid)
+
+    return render_template('propertyid.html',property=expandedProperty)
 
 @app.route('/properties')
 def properties():
-    get_uploaded_properties()
-    return render_template('properties.html')
+        propertyList = get_uploaded_properties()
+        return render_template('properties.html',list=propertyList)
 
 
 
@@ -112,9 +114,12 @@ def page_not_found(error):
     
 def get_uploaded_properties():
     propertyList = Property.query.all()
-    for p in propertyList:
-        print(p.title)
+    return propertyList
 
-
+@app.route('/uploads/<filename>')
+def get_image(filename):
+    root_dir = os.getcwd()
+    return send_from_directory(os.path.join(root_dir,app.config['UPLOAD_FOLDER']),filename)
+    
 if __name__ == '__main__':
     app.run(debug=True,host="0.0.0.0",port="8080")

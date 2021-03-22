@@ -1,13 +1,18 @@
-{% extends "base.html" %}
-
-{% block css %}
-<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
-{% endblock %}
-
+{% extends 'base.html' %}
 {% block main %}
+<div id="gallery">
 
-{% endblock %}
+    {% for item in list %} 
+    <div id='item'>
+        <img src="{{ url_for('get_image',filename=item.photo) }}" alt="Property Image">
+        <h2>{{item.title}}</h2>
+        <h3>{{item.location}}</h3>
+        <h4>${{item.price}}</h4>
+        <div>
+        <a href="{{ url_for('propertyid',propertyid=item.id) }}"  class="submit"> View Property</a>
+        </div>
+    {%endfor%} 
+    </div>
+</div>
 
-{% block js %}
-<script src="{{ url_for('static', filename='js/app.min.js') }}" charset="utf-8"></script>
 {% endblock %}
