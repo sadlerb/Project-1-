@@ -2,16 +2,23 @@
 {% block main %}
 
     <div id='property'>
-        <img src="{{ url_for('get_image',filename=property.photo) }}" alt="Property Image">
-        <h2>{{property.title}}</h2>
-        <h3>${{property.price}}</h3>
-        <h3>{{property.houseType}}</h3>
-        <p>{{property.description}}</p>
-        <h3>{{property.numBeds}}</h3>
-        <h3>{{property.numBath}}</h3>
-        <h3>{{property.location}}</h3>
-
+        <div id="prop-img">
+            <img src="{{ url_for('get_image',filename=property.photo) }}" alt="Property Image">
+        </div>
+        <div id="prop-info">
+            <div class="title"><h2 id="title">{{property.title}}</h2></div>
+            <div class="price"><h3 id="price">${{property.price}}</h3></div>
+            <div class="type"><h3 id="type">{{property.propertyType}}</h3></div>
+            <div class="desc"><p id="desc">{{property.description}}</p></div>
+            <div class="beds"><h3 id="beds">{{property.numBeds}} Bedrooms</h3></div>
+            <div class="bath"><h3 id="bath">{{property.numBath}} Bathrooms</h3></div>
+            <div class="loc"><h3 id="loc">{{property.location}}</h3></div>
+            
+        
+        <div id="email">
         <Button>Email Realtor</Button>
+    </div>
+    </div>
     </div>
 
 

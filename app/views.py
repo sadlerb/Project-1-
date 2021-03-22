@@ -31,7 +31,7 @@ def property():
             price = form.price.data
             desc = form.description.data
             propertyType = form.houseType.data
-            
+            numBath = form.bathrooms.data
             file = request.files['photo']
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))

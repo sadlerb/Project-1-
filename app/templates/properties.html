@@ -1,18 +1,26 @@
 {% extends 'base.html' %}
+{% block css %}
+{% endblock %}
 {% block main %}
+
 <div id="gallery">
 
     {% for item in list %} 
-    <div id='item'>
-        <img src="{{ url_for('get_image',filename=item.photo) }}" alt="Property Image">
-        <h2>{{item.title}}</h2>
-        <h3>{{item.location}}</h3>
-        <h4>${{item.price}}</h4>
+    <div class='item'>
         <div>
+            <img src="{{ url_for('get_image',filename=item.photo) }}" alt="Property Image">
+        </div>
+        <div class="item-info">
+            <h2>{{item.title}}</h2>
+            <h3>{{item.location}}</h3>
+            <h4>${{item.price}}</h4>
+        </div>
+        <div class="button">
         <a href="{{ url_for('propertyid',propertyid=item.id) }}"  class="submit"> View Property</a>
         </div>
-    {%endfor%} 
     </div>
-</div>
+    {%endfor%} 
 
+</div>
 {% endblock %}
+

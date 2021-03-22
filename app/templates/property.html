@@ -1,45 +1,60 @@
 {% extends "base.html" %}
 
 {% block css %}
-<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
 {% endblock %}
 
+
 {% block main %}
+<h1>Add New Property</h1>
+<div class='form'>
+
 <form action="{{ url_for('property') }}" method = 'POST' action="/process/file" enctype="multipart/form-data">
 
   <div>{{ form.csrf_token }}</div>
-  <div>
-    {{ form.title.label}}
-    {{ form.title}}
-  </div>
-  <div>
-    {{ form.description.label}}
+    <div class='form-item'>
+      {{ form.title.label}}<br>
+      {{ form.title}}
+    </div>
+
+  <div class='form-item'>
+    {{ form.description.label}}<br>
     {{ form.description}}
   </div>
-  <div>
-    {{ form.bedrooms.label}}
-    {{ form.bedrooms}}
-  </div>
-    {{ form.bathrooms.label}}
-    {{ form.bathrooms}}</div>
-  <div>
+
+    <div class='form-item'>
+      {{ form.bedrooms.label}}
+      {{ form.bedrooms}}
+    </div>
+
+    <div class='form-item'>
+      {{ form.bathrooms.label}}
+      {{ form.bathrooms}}
+    </div>
+
+    <div class='form-item'>
     {{ form.location.label}}
     {{ form.location}}
   </div>
-  <div>
+
+  <div class='form-item'>
     {{ form.price.label}}
     {{ form.price}}
   </div>
+
+  <div class='form-item'>
     {{ form.houseType.label}}
     {{ form.houseType}}
   </div>
-  <div>
+
+  <div class='form-item'>
     {{ form.photo.label}}
-    {{ form.photo}}</div>
+    {{ form.photo}}
+  </div>
+
   <input type="submit" name="submit" class="btn btn-primary"></input>
 </form>
 {% endblock %}
-
+</div>
 {% block js %}
 <script src="{{ url_for('static', filename='js/app.min.js') }}" charset="utf-8"></script>
 {% endblock %}
